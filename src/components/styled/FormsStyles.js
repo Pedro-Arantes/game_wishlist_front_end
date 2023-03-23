@@ -44,6 +44,18 @@ export const StyledForm = styled.form`
     height: 16px;
     color: white;
   }
+  .hidden{
+    visibility: hidden;
+    width: 1%;
+  }
+  .lock1{
+    left: 215px;
+    bottom: 185px;
+  }
+  .lock2{
+    left: 435px;
+    bottom: 185px;
+  }
 `;
 export const FormMain = styled.main`
     display: flex;
