@@ -6,17 +6,36 @@ import {
 } from "@/components/styled/FormsStyles";
 import StyledButton from "@/components/styled/StyledButton";
 import { useUserContext } from "@/contexts/UserContext";
+import useRegister from "@/hooks/api/useRegister";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
-import user from "../../../public/userhearth.png"
 
 export default function Register() {
   const [clicked, setClicked] = useState(false);
   const [confClicked, setClickedConf] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confPassword, setConfPass] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [username, setUsername] = useState("");
   const { token} = useUserContext();
-  console.log(token)
+  const { register, registerError,registerData } = useRegister();
+
+  const submit = async (e) =>{
+    e.preventDefault();
+    if(password !== confPassword)return alert('Confirmation password must be equal to Password!')
+    try {
+      const response = await register(username,email, cpf,password);
+      console.log(response.data);
+      console.log(registerData);
+      alert('Cadastro Realizado com Sucesso!')
+    } catch (error) {
+      alert("Erro!")
+      console.log(error)
+    }
+  }
   return (
     <>
       <Head>
@@ -24,7 +43,7 @@ export default function Register() {
         <title>GameWish</title>
       </Head>
       <FormMain>
-        <StyledForm onSubmit={() => alert("Logado!")}>
+        <StyledForm onSubmit={submit}>
           <TitleForm>
             <h1>Creating</h1>
             <h3>
@@ -34,32 +53,32 @@ export default function Register() {
           <InputsDiv>
             <StyledInput
               type="text"
-              id="fname"
-              name="fname"
               placeholder="Username"
               img={
                 "https://cdn3.iconfinder.com/data/icons/game-play/512/gaming-game-play-multimedia-console-20-256.png"
               }
               size={21}
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
             <StyledInput
               type="text"
-              id="fname"
-              name="fname"
               placeholder="CPF"
               img={
                 "https://cdn2.iconfinder.com/data/icons/file-formats-44/780/119_-_CPF-256.png"
               }
               size={26}
+              value={cpf}
+              onChange={e => setCpf(e.target.value)}
             />
             <StyledInput
               type="email"
-              id="fname"
-              name="fname"
               placeholder="E-Mail"
               img={
                 "https://cdn0.iconfinder.com/data/icons/essentials-9/128/__Letter-256.png"
               }
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
             <img
               onClick={() => setClicked(!clicked)}
@@ -85,12 +104,16 @@ export default function Register() {
               id="fname"
               name="fname"
               placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
             <StyledInput
               type={confClicked ? "text" : "password"}
               id="fname"
               name="fname"
               placeholder="Confirm Password"
+              value={confPassword}
+              onChange={e => setConfPass(e.target.value)}
             />
           </InputsDiv>
 
