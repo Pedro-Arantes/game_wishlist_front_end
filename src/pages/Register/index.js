@@ -5,6 +5,7 @@ import {
   FormMain,
 } from "@/components/styled/FormsStyles";
 import StyledButton from "@/components/styled/StyledButton";
+import { useUserContext } from "@/contexts/UserContext";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
@@ -14,6 +15,8 @@ import user from "../../../public/userhearth.png"
 export default function Register() {
   const [clicked, setClicked] = useState(false);
   const [confClicked, setClickedConf] = useState(false);
+  const { token} = useUserContext();
+  console.log(token)
   return (
     <>
       <Head>

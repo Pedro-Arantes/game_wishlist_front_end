@@ -5,6 +5,7 @@ import {
   FormMain,
 } from "@/components/styled/FormsStyles";
 import StyledButton from "@/components/styled/StyledButton";
+import { useUserContext } from "@/contexts/UserContext";
 import useLogin from "@/hooks/api/useLogin";
 import Head from "next/head";
 import Link from "next/link";
@@ -16,7 +17,7 @@ export default function Login() {
   const { login, loginError,loginData } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token,setToken] = useState('')
+  const { setToken } = useUserContext();
 
   const submit = async (e) =>{
     e.preventDefault();
