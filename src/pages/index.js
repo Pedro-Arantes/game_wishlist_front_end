@@ -20,7 +20,7 @@ export default function Home() {
           <StyledButton onClick={()=> router.push('/Login')}>
             <span>Login</span>
           </StyledButton>
-          <StyledButton>
+          <StyledButton onClick={()=> router.push('/Games')}>
             <span>Enter</span>
           </StyledButton>
         </ButtonsDiv>
