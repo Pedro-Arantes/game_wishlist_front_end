@@ -8,6 +8,7 @@ import useLogin from "@/hooks/api/useLogin";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import  veno from "../../../public/venonat.png"
@@ -17,6 +18,7 @@ export default function Games() {
     const [games,setGames] = useState();
     const {gamesData} = useGetGames();
     const { setDtGame } = useGameContext();
+    const router = useRouter()
     useEffect(()=>{
       setGames(gamesData?.data)
       setDtGame(gamesData?.data)
@@ -32,11 +34,12 @@ export default function Games() {
       <GameMain>
       <StyledNav>
         <p>Search:</p>
-        <div>
+        <div onClick={()=>router.push("/Profile")}>
         <Image
         src={veno}
         width={50}
-        height={50}/>
+        height={50}
+        alt="Profile Picture"/>
         </div>
         
       </StyledNav>

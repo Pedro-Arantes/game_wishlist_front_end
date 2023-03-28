@@ -14,6 +14,7 @@ export default styled.nav`
     border-color: #5B42F3;
     border-width: 2px;
     padding: 13px;
+    z-index: 2;
 
     div{
         display: flex;
