@@ -24,7 +24,7 @@ export default function Games() {
           <Image src={veno} width={150} height={150} alt="Profile Picture" />
         </ProfileDiv>
 
-        <TextDiv>Name</TextDiv>
+        <TextDiv>Nam</TextDiv>
         <TextDiv>Email</TextDiv>
         <TextDiv>Password</TextDiv>
         <TextDiv>Cpf</TextDiv>
