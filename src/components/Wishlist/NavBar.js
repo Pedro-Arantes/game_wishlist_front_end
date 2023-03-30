@@ -1,16 +1,33 @@
 import styled from "styled-components";
 import  {IoArrowBackCircleSharp}  from "react-icons/io5";
+import {AiOutlineHome} from 'react-icons/ai'
 import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
+import  veno from "../../../public/venonat.png"
+import Image from "next/image";
 
 export default function NavBar({route}) {
     const router = useRouter()
   return (
     <StyledNav>
-      <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Games': "/"+route)} />
-      
+        
+      <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Profile': "/"+route)} />
+      <HomeDiv onClick={()=>router.push('/Games')}>
+      <AiOutlineHome/>
+      </HomeDiv>
       <ProfLogout>
       <RiLogoutBoxLine/>
+      <ProfileDiv onClick={()=>router.push({
+            pathname: "/Profile",
+            query: {page:'Wishlist'}
+            })}>
+        <Image
+        src={veno}
+        width={50}
+        height={50}
+        alt="Profile Picture"/>
+        </ProfileDiv>
+      
       </ProfLogout>
       
     </StyledNav>
@@ -24,7 +41,7 @@ const StyledNav = styled.nav`
   justify-content: space-between;
   top: 0;
   left: 13px;
-  width: 1476px;
+  width: 1482px;
   height: 10%;
   background-color: rgb(5, 6, 45);
   color: white;
@@ -61,4 +78,9 @@ svg{
     font-size: 50px;
 }
 
+`
+const HomeDiv= styled.div`
+svg{
+    color: green;
+}
 `

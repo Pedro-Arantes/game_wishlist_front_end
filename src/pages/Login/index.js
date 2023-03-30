@@ -5,11 +5,12 @@ import {
   FormMain,
 } from "@/components/styled/FormsStyles";
 import StyledButton from "@/components/styled/StyledButton";
-import { useUserContext } from "@/contexts/UserContext";
+import UserContext, { useUserContext } from "@/contexts/UserContext";
 import useLogin from "@/hooks/api/useLogin";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 
 export default function Login() {
@@ -17,16 +18,16 @@ export default function Login() {
   const { login, loginError,loginData } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useUserContext();
-
+  const { setToken } = useContext(UserContext);
+  const router = useRouter();
   const submit = async (e) =>{
     e.preventDefault();
     try {
       const response = await login(email, password);
       setToken(response.data);
-      console.log(response.data);
-      console.log(loginData);
+      localStorage.setItem("token",response.data)
       alert('Login Realizado com Sucesso!')
+      router.push('/Games')
     } catch (error) {
       alert("Erro!")
       console.log(error)
@@ -77,13 +78,13 @@ export default function Login() {
           <StyledButton number={20}>
             <span>Login</span>
           </StyledButton>
-          <Link href={"/Register"}>Don't have an account?</Link>
+          <Link href={"/Register"}>{"Don't have an account?"}</Link>
         </StyledForm>
       </FormMain>
     </>
   );
 }
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   height: 30px;
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;

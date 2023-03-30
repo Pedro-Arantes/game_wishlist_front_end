@@ -5,11 +5,11 @@ import  {IoArrowBackCircleSharp}  from "react-icons/io5";
 import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
 
-export default function NavBar() {
+export default function NavBar({route}) {
     const router = useRouter()
   return (
     <StyledNav>
-      <IoArrowBackCircleSharp onClick={()=>router.push('/Games')} />
+      <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Games': "/"+route)} />
       
       <ProfLogout>
       <RiLogoutBoxLine/>

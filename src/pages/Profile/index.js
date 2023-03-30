@@ -2,15 +2,26 @@ import HeadComp from "@/components/Head";
 import NavBar from "@/components/Profile/NavBar";
 import Image from "next/image";
 import veno from "../../../public/venonat.png";
-import { useUserContext } from "@/contexts/UserContext";
+import UserContext, { useUserContext } from "@/contexts/UserContext";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import useGetUser from "@/hooks/api/useGetUser";
 
-export default function Games() {
-  const { token } = useUserContext();
+export default function Profile() {
   const router = useRouter();
+  const [route,setRoute] = useState();
+  const {userData} = useGetUser();
+  const { page } = router.query;
+  console.log(userData?.data)
+  useEffect(()=>{
+    if(page){
+      setRoute(page)
+    }
+  },[page])
+  
+  
 
   return (
     <>
@@ -18,18 +29,18 @@ export default function Games() {
         <HeadComp />
         <title>GameWish</title>
       </Head>
-      <NavBar />
+      <NavBar  route ={route}/>
       <ProfileMain>
         <ProfileDiv>
           <Image src={veno} width={150} height={150} alt="Profile Picture" />
         </ProfileDiv>
 
-        <TextDiv>Nam</TextDiv>
+        <TextDiv>{userData?.data.name}</TextDiv>
         <TextDiv>Email</TextDiv>
         <TextDiv>Password</TextDiv>
         <TextDiv>Cpf</TextDiv>
-        <TextDiv>Wishlist</TextDiv>
-        <TextDiv>Config</TextDiv>
+        <TextDiv onClick={()=>router.push(`/Wishlist`)}>Wishlist</TextDiv>
+        <TextDiv>Add Games</TextDiv>
       </ProfileMain>
     </>
   );
@@ -56,6 +67,7 @@ const TextDiv = styled.div`
   border-color: purple;
   width: 90%;
   font-size: 25px;
+  cursor: pointer;
 `;
 const ProfileDiv = styled.div`
   display: flex;

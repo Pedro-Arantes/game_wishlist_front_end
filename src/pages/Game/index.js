@@ -1,25 +1,35 @@
-import GameComp from "@/components/Game";
+import outStar from '../../../public/staroutline.png'
+import fillStar from '../../../public/starfilled.png'
 import HeadComp from "@/components/Head";
 import NavBar from "@/components/NavBar";
-import StyledNav from "@/components/styled/StyledNav";
 import { useGameContext } from "@/contexts/GameContext";
-import { useUserContext } from "@/contexts/UserContext";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import StyledButton from '@/components/styled/StyledButton';
+import useAvgGrade from '@/hooks/api/useAvgGrade';
+import UserContext from '@/contexts/UserContext';
 
 export default function Games() {
-  const { token } = useUserContext();
   const { DtGame } = useGameContext();
+  const [clicked,setClicked] = useState(false);
+  const [range,setRange] = useState(0);
+  const [route,setRoute] = useState();
   const router = useRouter();
   const { num } = router.query;
   const game = DtGame[num];
-  console.log(game);
-  const defineGradeColor = () =>{
-    const grade = Number(game?.grade)*10
-    console.log(grade)
+  const {gradesData} = useAvgGrade(game?.id);
+  const {page} = useContext(UserContext)
+  const defineGradeColor = (num) =>{
+    let grade;
+    if(num || num === 0){
+      grade = Number(num)*10
+    }else{
+      grade = Number(gradesData?.data.grade)*10
+      console.log(grade)
+    }
     if (grade >= 75) {
       return "green";
     }else if (grade < 75 && grade >=50){
@@ -29,25 +39,42 @@ export default function Games() {
     }else{
       return "red"
     }
+
   }
+  useEffect(()=>{
+    if(page !== ''){
+      setRoute(page)
+    }
+  },[page])
   return (
     <>
       <Head>
         <HeadComp />
         <title>GameWish</title>
       </Head>
-      <NavBar />
+      <NavBar route ={route} />
       <GameMain>
         <GameDataStyle>
           <GameDiv>
-            <img src={game?.image} />
+            <img alt="" src={game?.image} />
           </GameDiv>
           <DataDiv>
             <OneDataDiv>Name: {game?.name}</OneDataDiv>
             <OneDataDiv>Genre: {game?.genre}</OneDataDiv>
             <OneDataDiv>Platform: {game?.platform}</OneDataDiv>
             <OneDataDiv border ={true}>Grade:</OneDataDiv>
-            <GradeDiv num={defineGradeColor()}>{game?.grade}</GradeDiv>
+            <GradeWishDiv>
+            <GradeDiv num={defineGradeColor()}>{gradesData?.data.grade}</GradeDiv>
+            <Image alt="" onClick={()=>setClicked(!clicked)} src={clicked ? fillStar :outStar} width={50} height={50}/>
+            </GradeWishDiv>
+            <OneDataDiv>Your Grade</OneDataDiv>
+            <RangeForm>
+              <input type="number" min={0} max="10" step="0.5" value={range} onChange={(e)=>setRange(e.target.value)} ></input>
+              
+              <GradeDiv num={defineGradeColor(range)}>{range}</GradeDiv>
+              <StyledButton number={20} num={20}><span>Give Grade</span></StyledButton>
+            </RangeForm>
+            
           </DataDiv>
         </GameDataStyle>
       </GameMain>
@@ -86,7 +113,7 @@ const GameDiv = styled.div`
 
   img {
     width: 500px;
-    height: 500px;
+    height: 600px;
   }
 `;
 const GameDataStyle = styled.div`
@@ -120,4 +147,19 @@ font-size: 70px;
 font-weight: 800;
 color: white;
 
+`
+const GradeWishDiv = styled.div`
+
+display: flex;
+gap: 70px;
+width: 100%;
+
+`
+const RangeForm = styled.form`
+display: flex;
+flex-direction: column;
+gap: 25px;
+input{
+  width: 40px;
+}
 `

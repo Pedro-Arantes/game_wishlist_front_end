@@ -1,30 +1,28 @@
 import GameComp from "@/components/Game";
 import HeadComp from "@/components/Head";
-import StyledNav from "@/components/styled/StyledNav";
+import NavBar from "@/components/Wishlist/NavBar";
 import { useGameContext } from "@/contexts/GameContext";
-import UserContext, { useUserContext } from "@/contexts/UserContext";
+import UserContext from "@/contexts/UserContext";
 import useGetGames from "@/hooks/api/useGetGames";
-import useLogin from "@/hooks/api/useLogin";
+import useGetWish from "@/hooks/api/useGetWish";
+import useToken from "@/hooks/useToken";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import  veno from "../../../public/venonat.png"
 
-export default function Games() {
-    const [games,setGames] = useState();
-    const {gamesData} = useGetGames();
+export default function Wishlist() {
+    const token = useToken()
     const {setPage} = useContext(UserContext)
-    const { setDtGame } = useGameContext();
+    const [games,setGames] = useState();
+    const {wishData} = useGetWish(token);
     const router = useRouter()
     useEffect(()=>{
-      setGames(gamesData?.data)
-      setDtGame(gamesData?.data)
-      setPage("Games")
-    },[gamesData])
-    console.log(gamesData?.data)
+      setGames(wishData?.data)
+      setPage('Wishlist')
+    },[wishData])
+    console.log(wishData?.data)
   return (
     <>
       <Head>
@@ -32,26 +30,21 @@ export default function Games() {
         <title>GameWish</title>
       </Head>
 
-      <GameMain>
-      <StyledNav>
-        <p>Search:</p>
-        <div onClick={()=>router.push("/Profile")}>
-        <Image
-        src={veno}
-        width={50}
-        height={50}
-        alt="Profile Picture"/>
-        </div>
+      <WishMain>
+        <TitleDiv>
+        <h1>My Wishlist</h1>
+        <StyledLogo src="/dragonball.png"/>
+        </TitleDiv>
         
-      </StyledNav>
+        <NavBar/>
         <ListGames>
-            {games?.map((item,id)=><GameComp key={item.id}data={item} id={id}/>)}
+            {games?.map((item,id)=><GameComp key={item.id}data={item.game} id={id}/>)}
         </ListGames>
-      </GameMain>
+      </WishMain>
     </>
   );
 }
-const GameMain = styled.main`
+const WishMain = styled.main`
 
     display: flex;
     position: relative;
@@ -65,6 +58,10 @@ const GameMain = styled.main`
     margin-left: 13px;
     background-color: rgb(5, 6, 45);
     color: white;
+    h1{
+        font-size: 90px;
+        color: orange;
+    }
 `
 const ListGames = styled.div`
 
@@ -101,4 +98,13 @@ img{
     height: 193px;
 }
 
+`
+const StyledLogo = styled.img`
+  width: 100px;
+  height: 100px;
+`
+const TitleDiv = styled.div`
+display: flex;
+align-items: center;
+gap: 10px;
 `

@@ -16,7 +16,7 @@ export default styled.button`
   justify-content: center;
   line-height: 1em;
   height: ${props => props.number ? props.number+"%":100+"%"};
-  max-width: 100%;
+  max-width: ${props => props.num ? props.num+"%":100+"%"};
   min-width: 140px;
   padding: 3px;
   text-decoration: none;
