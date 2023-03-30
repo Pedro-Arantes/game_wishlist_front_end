@@ -1,6 +1,6 @@
 import useAsync from '../useAsync';
 
-import * as userApi from '../../services/userApi';
+import * as userApi from '../../services/api/userApi';
 
 export default function useGetUser() {
   const {

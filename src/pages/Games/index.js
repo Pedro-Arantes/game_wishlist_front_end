@@ -1,4 +1,5 @@
 import GameComp from "@/components/Game";
+import NavBar from "@/components/Games/NavBar";
 import HeadComp from "@/components/Head";
 import StyledNav from "@/components/styled/StyledNav";
 import { useGameContext } from "@/contexts/GameContext";
@@ -33,17 +34,7 @@ export default function Games() {
       </Head>
 
       <GameMain>
-      <StyledNav>
-        <p>Search:</p>
-        <div onClick={()=>router.push("/Profile")}>
-        <Image
-        src={veno}
-        width={50}
-        height={50}
-        alt="Profile Picture"/>
-        </div>
-        
-      </StyledNav>
+        <NavBar/>
         <ListGames>
             {games?.map((item,id)=><GameComp key={item.id}data={item} id={id}/>)}
         </ListGames>

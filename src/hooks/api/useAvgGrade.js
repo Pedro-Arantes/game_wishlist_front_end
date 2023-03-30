@@ -1,6 +1,6 @@
 import useAsync from '../useAsync';
 
-import * as gradesApi from '../../services/gradesApi';
+import * as gradesApi from '../../services/api/gradesApi';
 
 export default function useAvgGrade(gameId) {
   const {

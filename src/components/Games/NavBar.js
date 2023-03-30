@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Image from "next/image";
+import veno from "../../../public/venonat.png";
 import  {IoArrowBackCircleSharp}  from "react-icons/io5";
 import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
@@ -9,19 +11,22 @@ export default function NavBar({route}) {
     const router = useRouter()
     const {session} = useDelSession()
     const logout= async () =>{
-      try {
-          const sess = await session()
-          logoutMessage(router)
-      } catch (error) {
-          logoutMessage(router,error)
-      }
-  }
+        try {
+            const sess = await session()
+            logoutMessage(router)
+        } catch (error) {
+            logoutMessage(router,error)
+        }
+    }
   return (
     <StyledNav>
-      <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Games': "/"+route)} />
-      
-      <ProfLogout>
+      <IoArrowBackCircleSharp onClick={()=>router.push('/')} />
+      <p>Search:</p>
+      <ProfLogout >
       <RiLogoutBoxLine onClick={logout}/>
+      <ProfileDiv onClick={()=>router.push("/Profile")}>
+        <Image src={veno} width={50} height={50} alt="Profile Picture" />
+      </ProfileDiv>
       </ProfLogout>
       
     </StyledNav>

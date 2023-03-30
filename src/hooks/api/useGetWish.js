@@ -1,6 +1,6 @@
 import useAsync from '../useAsync';
 
-import * as wishApi from '../../services/wishApi';
+import * as wishApi from '../../services/api/wishApi';
 
 export default function useGetWish(token) {
   const {

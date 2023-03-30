@@ -5,9 +5,20 @@ import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
 import  veno from "../../../public/venonat.png"
 import Image from "next/image";
+import useDelSession from "@/hooks/api/useDelSession";
+import logoutMessage from "@/services/logout";
 
 export default function NavBar({route}) {
-    const router = useRouter()
+  const router = useRouter()
+  const {session} = useDelSession()
+  const logout= async () =>{
+    try {
+        const sess = await session()
+        logoutMessage(router)
+    } catch (error) {
+        logoutMessage(router,error)
+    }
+}
   return (
     <StyledNav>
         
@@ -16,7 +27,7 @@ export default function NavBar({route}) {
       <AiOutlineHome/>
       </HomeDiv>
       <ProfLogout>
-      <RiLogoutBoxLine/>
+      <RiLogoutBoxLine onClick={logout}/>
       <ProfileDiv onClick={()=>router.push({
             pathname: "/Profile",
             query: {page:'Wishlist'}

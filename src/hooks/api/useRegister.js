@@ -1,5 +1,5 @@
 import useAsync from '../useAsync';
-import * as registerApi from '../../services/registerApi';
+import * as registerApi from '../../services/api/registerApi';
 
 export default function useRegister() {
   const {
