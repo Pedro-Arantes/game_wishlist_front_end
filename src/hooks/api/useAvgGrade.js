@@ -7,13 +7,13 @@ export default function useAvgGrade(gameId) {
     loading: gradesLoading,
     error: gradesError,
     data: gradesData,
-    act: grades
+    act: avgGrades
   } = useAsync(()=>gradesApi.avgGrade(gameId));
 
   return {
     gradesLoading,
     gradesError,
     gradesData,
-    grades
+    avgGrades
   };
 }

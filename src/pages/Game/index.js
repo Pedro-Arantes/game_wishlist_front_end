@@ -10,18 +10,25 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledButton from '@/components/styled/StyledButton';
 import useAvgGrade from '@/hooks/api/useAvgGrade';
+import useGiveGrade from '@/hooks/api/useGiveGrade';
 import UserContext from '@/contexts/UserContext';
 
 export default function Games() {
   const { DtGame } = useGameContext();
   const [clicked,setClicked] = useState(false);
+  const [refresh,setRefresh] = useState(false);
   const [range,setRange] = useState(0);
   const [route,setRoute] = useState();
   const router = useRouter();
   const { num } = router.query;
   const game = DtGame[num];
-  const {gradesData} = useAvgGrade(game?.id);
+  let {gradesData,avgGrades} = useAvgGrade(game?.id);
   const {page} = useContext(UserContext)
+  const {grades} = useGiveGrade()
+
+  useEffect(()=>{
+    gradesData  = avgGrades(game?.id)
+  },[refresh])
   const defineGradeColor = (num) =>{
     let grade;
     if(num || num === 0){
@@ -46,6 +53,20 @@ export default function Games() {
       setRoute(page)
     }
   },[page])
+  const submit = async (e) =>{
+    e.preventDefault();
+      try {
+        const grade = Number(range) 
+        const gameId = game?.id
+        console.log(game?.id,grade)
+        const response = await grades(gameId,grade)
+        alert('Nota dada com Sucesso!')
+        setRefresh(!refresh)
+      } catch (error) {
+        alert("Erro!")
+        console.log(error)
+      }
+  }
   return (
     <>
       <Head>
@@ -68,7 +89,7 @@ export default function Games() {
             <Image alt="" onClick={()=>setClicked(!clicked)} src={clicked ? fillStar :outStar} width={50} height={50}/>
             </GradeWishDiv>
             <OneDataDiv>Your Grade</OneDataDiv>
-            <RangeForm>
+            <RangeForm onSubmit={submit}>
               <input type="number" min={0} max="10" step="0.5" value={range} onChange={(e)=>setRange(e.target.value)} ></input>
               
               <GradeDiv num={defineGradeColor(range)}>{range}</GradeDiv>
