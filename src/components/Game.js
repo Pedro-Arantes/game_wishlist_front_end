@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 export default function GameComp({data,id}) {
     const {name,image} = data
     const router = useRouter()
-    console.log(data)
     return (
       <GameDiv onClick={()=> router.push({
         pathname:'/Game',

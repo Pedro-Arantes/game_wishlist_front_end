@@ -10,6 +10,7 @@ export async function getWishlist(token) {
   return response;
 }
 export async function getWishByGameId(gameId) {
+  console.log(gameId)
   const token = useToken()
   const response = await api.get(`/wish/${gameId}`,{
     headers: {

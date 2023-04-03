@@ -38,7 +38,7 @@ export default function Wishlist() {
         
         <NavBar/>
         <ListGames>
-            {games?.map((item,id)=><GameComp key={item.id}data={item.game} id={id}/>)}
+            {games?.map((item,id)=><GameComp key={item.id}data={item.game} id={item.game_id}/>)}
         </ListGames>
       </WishMain>
     </>

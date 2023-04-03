@@ -8,7 +8,7 @@ export default function useDelWish() {
     error: wishError,
     data: wishData,
     act: wishDel
-  } = useAsync((id)=>wishApi.delWish(id));
+  } = useAsync((id)=>wishApi.delWish(id),false);
 
   return {
     wishLoading,

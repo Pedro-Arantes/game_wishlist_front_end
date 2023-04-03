@@ -28,25 +28,26 @@ export default function Game() {
   const {gameData,gameBy} = useGameById(num)
   const game = gameData?.data;
   console.log(game)
-  let {gradesData,avgGrades} = useAvgGrade(game?.id);
+  let {gradesData,avgGrades} = useAvgGrade();
   const {page} = useContext(UserContext)
   const {grades} = useGiveGrade()
-  let {wishData,wish} = useGetWishByGameId(game?.id)
+  let {wishData,wish} = useGetWishByGameId()
   const {wishCreate} = useCreateWish()
   const {wishDel} = useDelWish()
 
-  useEffect(()=>{
-    
+  useEffect(()=>{ 
     try {
-      wishData =   wish(game?.id)
-      gradesData  = avgGrades(game?.id)
-      console.log(wishData)
+      if(game){
+        console.log(game)
+        wishData =   wish(game?.id)
+        gradesData  = avgGrades(game?.id)
+      }
    } catch (error) {
-     alert("Erro!")
+      alert("Erro!")
        console.log(error)
    }
     if(wishData && wishData.data !== ''){
-      setClicked(false)
+      setClicked(true)
     }
   },[refresh,gameData])
 
