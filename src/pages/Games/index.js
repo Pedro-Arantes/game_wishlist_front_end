@@ -36,7 +36,7 @@ export default function Games() {
       <GameMain>
         <NavBar/>
         <ListGames>
-            {games?.map((item,id)=><GameComp key={item.id}data={item} id={id}/>)}
+            {games?.map((item,id)=><GameComp key={item.id}data={item} id={item.id}/>)}
         </ListGames>
       </GameMain>
     </>

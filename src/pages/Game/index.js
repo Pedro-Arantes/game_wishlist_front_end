@@ -12,8 +12,12 @@ import StyledButton from '@/components/styled/StyledButton';
 import useAvgGrade from '@/hooks/api/useAvgGrade';
 import useGiveGrade from '@/hooks/api/useGiveGrade';
 import UserContext from '@/contexts/UserContext';
+import useGetWishByGameId from '@/hooks/api/useGetWishByGameId';
+import useGameById from '@/hooks/api/useGameById';
+import useCreateWish from '@/hooks/api/useCreateWish';
+import useDelWish from '@/hooks/api/useDelWish';
 
-export default function Games() {
+export default function Game() {
   const { DtGame } = useGameContext();
   const [clicked,setClicked] = useState(false);
   const [refresh,setRefresh] = useState(false);
@@ -21,14 +25,31 @@ export default function Games() {
   const [route,setRoute] = useState();
   const router = useRouter();
   const { num } = router.query;
-  const game = DtGame[num];
+  const {gameData,gameBy} = useGameById(num)
+  const game = gameData?.data;
+  console.log(game)
   let {gradesData,avgGrades} = useAvgGrade(game?.id);
   const {page} = useContext(UserContext)
   const {grades} = useGiveGrade()
+  let {wishData,wish} = useGetWishByGameId(game?.id)
+  const {wishCreate} = useCreateWish()
+  const {wishDel} = useDelWish()
 
   useEffect(()=>{
-    gradesData  = avgGrades(game?.id)
-  },[refresh])
+    
+    try {
+      wishData =   wish(game?.id)
+      gradesData  = avgGrades(game?.id)
+      console.log(wishData)
+   } catch (error) {
+     alert("Erro!")
+       console.log(error)
+   }
+    if(wishData && wishData.data !== ''){
+      setClicked(false)
+    }
+  },[refresh,gameData])
+
   const defineGradeColor = (num) =>{
     let grade;
     if(num || num === 0){
@@ -67,6 +88,24 @@ export default function Games() {
         console.log(error)
       }
   }
+  const giveWish = async () =>{
+    try {
+      if(clicked){
+        setClicked(false)
+        console.log(wishData.data.id)
+        const resp = await wishDel(wishData.data.id)
+      }else{
+        const resp = await wishCreate(game?.id)
+        setClicked(true)
+      }
+    } catch (error) {
+      alert("Erro!")
+      setClicked(!clicked)
+      console.log(error)
+    }
+    
+    
+  }
   return (
     <>
       <Head>
@@ -86,7 +125,7 @@ export default function Games() {
             <OneDataDiv border ={true}>Grade:</OneDataDiv>
             <GradeWishDiv>
             <GradeDiv num={defineGradeColor()}>{gradesData?.data.grade}</GradeDiv>
-            <Image alt="" onClick={()=>setClicked(!clicked)} src={clicked ? fillStar :outStar} width={50} height={50}/>
+            <Image alt="" onClick={giveWish} src={clicked ? fillStar :outStar} width={50} height={50}/>
             </GradeWishDiv>
             <OneDataDiv>Your Grade</OneDataDiv>
             <RangeForm onSubmit={submit}>
@@ -174,7 +213,6 @@ const GradeWishDiv = styled.div`
 display: flex;
 gap: 70px;
 width: 100%;
-
 `
 const RangeForm = styled.form`
 display: flex;

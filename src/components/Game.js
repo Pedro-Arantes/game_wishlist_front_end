@@ -9,7 +9,7 @@ export default function GameComp({data,id}) {
       <GameDiv onClick={()=> router.push({
         pathname:'/Game',
         query:{num: id}
-        })}>
+        },'/Game')}>
             <img alt={name} src={image}/>
             <p>{name}</p>
       </GameDiv>
