@@ -40,7 +40,7 @@ export default function Profile() {
         <TextDiv>Password</TextDiv>
         <TextDiv>Cpf</TextDiv>
         <TextDiv onClick={()=>router.push(`/Wishlist`)}>Wishlist</TextDiv>
-        <TextDiv>Add Games</TextDiv>
+        <TextDiv onClick={()=>router.push(`/AddGame`)}>Add Game</TextDiv>
       </ProfileMain>
     </>
   );

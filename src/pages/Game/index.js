@@ -26,19 +26,17 @@ export default function Game() {
   const router = useRouter();
   const { num } = router.query;
   const {gameData,gameBy} = useGameById(num)
-  const game = gameData?.data;
-  console.log(game)
   let {gradesData,avgGrades} = useAvgGrade();
   const {page} = useContext(UserContext)
   const {grades} = useGiveGrade()
   let {wishData,wish} = useGetWishByGameId()
   const {wishCreate} = useCreateWish()
   const {wishDel} = useDelWish()
+  const game = gameData?.data;
 
   useEffect(()=>{ 
     try {
       if(game){
-        console.log(game)
         wishData =   wish(game?.id)
         gradesData  = avgGrades(game?.id)
       }

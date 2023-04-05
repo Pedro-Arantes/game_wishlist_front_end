@@ -28,8 +28,6 @@ export default function Register() {
     if(password !== confPassword)return alert('Confirmation password must be equal to Password!')
     try {
       const response = await register(username,email, cpf,password);
-      console.log(response.data);
-      console.log(registerData);
       alert('Cadastro Realizado com Sucesso!')
     } catch (error) {
       alert("Erro!")

@@ -7,6 +7,7 @@ import  veno from "../../../public/venonat.png"
 import Image from "next/image";
 import useDelSession from "@/hooks/api/useDelSession";
 import logoutMessage from "@/services/logout";
+import { verify } from "@/services/verifyLog";
 
 export default function NavBar({route}) {
   const router = useRouter()
@@ -19,19 +20,26 @@ export default function NavBar({route}) {
         logoutMessage(router,error)
     }
 }
+const goToProfile = () =>{
+  if(verify()){
+    router.push({
+      pathname: "/Profile",
+      query: {page:'Wishlist'}
+      })
+  }else{
+    alert("You have to log in to acess here.")
+  } 
+}
   return (
     <StyledNav>
         
       <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Profile': "/"+route)} />
       <HomeDiv onClick={()=>router.push('/Games')}>
-      <AiOutlineHome/>
+      <StyledLogo src="/dragonball.png"/>
       </HomeDiv>
       <ProfLogout>
       <RiLogoutBoxLine onClick={logout}/>
-      <ProfileDiv onClick={()=>router.push({
-            pathname: "/Profile",
-            query: {page:'Wishlist'}
-            })}>
+      <ProfileDiv onClick={goToProfile}>
         <Image
         src={veno}
         width={50}
@@ -94,4 +102,9 @@ const HomeDiv= styled.div`
 svg{
     color: green;
 }
+`
+
+const StyledLogo = styled.img`
+  width: 60px;
+  height: 60px;
 `

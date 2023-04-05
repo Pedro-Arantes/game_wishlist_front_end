@@ -33,7 +33,6 @@ export default function Wishlist() {
       <WishMain>
         <TitleDiv>
         <h1>My Wishlist</h1>
-        <StyledLogo src="/dragonball.png"/>
         </TitleDiv>
         
         <NavBar/>
@@ -99,10 +98,7 @@ img{
 }
 
 `
-const StyledLogo = styled.img`
-  width: 100px;
-  height: 100px;
-`
+
 const TitleDiv = styled.div`
 display: flex;
 align-items: center;

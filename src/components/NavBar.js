@@ -6,6 +6,7 @@ import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
 import useDelSession from "@/hooks/api/useDelSession";
 import logoutMessage from "@/services/logout";
+import { verify } from "@/services/verifyLog";
 
 export default function NavBar({route}) {
   const router = useRouter()
@@ -18,13 +19,20 @@ export default function NavBar({route}) {
         logoutMessage(router,error)
     }
 }
+const goToProfile = () =>{
+  if(verify()){
+    router.push("/Profile")
+  }else{
+    alert("You have to log in to acess here.")
+  } 
+}
   return (
     <StyledNav>
       <IoArrowBackCircleSharp onClick={()=>router.push(!route ?'/Games': "/"+route)} />
       
       <ProfLogout>
       <RiLogoutBoxLine onClick={logout}/>
-      <ProfileDiv onClick={()=>router.push("/Profile")}>
+      <ProfileDiv onClick={goToProfile}>
         <Image src={veno} width={50} height={50} alt="Profile Picture" />
       </ProfileDiv>
       </ProfLogout>
