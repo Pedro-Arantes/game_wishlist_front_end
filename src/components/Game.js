@@ -28,4 +28,5 @@ min-width: fit-content;
 height: max-content;
 border-radius: 5px;
 color: black;
+font-weight: 600;
 `  

@@ -35,10 +35,8 @@ export default function Profile() {
           <Image src={veno} width={150} height={150} alt="Profile Picture" />
         </ProfileDiv>
 
-        <TextDiv>{userData?.data.name}</TextDiv>
-        <TextDiv>Email</TextDiv>
-        <TextDiv>Password</TextDiv>
-        <TextDiv>Cpf</TextDiv>
+        <TextDiv>Name: {userData?.data.name}</TextDiv>
+        <TextDiv>Edit Profile</TextDiv>
         <TextDiv onClick={()=>router.push(`/Wishlist`)}>Wishlist</TextDiv>
         <TextDiv onClick={()=>router.push(`/AddGame`)}>Add Game</TextDiv>
       </ProfileMain>

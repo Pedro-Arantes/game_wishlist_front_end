@@ -32,13 +32,13 @@ export default function Games() {
         <HeadComp />
         <title>GameWish</title>
       </Head>
-
-      <GameMain>
+      {!games ? <GameMain><H1loading>Loading...</H1loading></GameMain> :<GameMain>
         <NavBar/>
         <ListGames>
             {games?.map((item,id)=><GameComp key={item.id}data={item} id={item.id}/>)}
         </ListGames>
-      </GameMain>
+      </GameMain>}
+      
     </>
   );
 }
@@ -92,4 +92,8 @@ img{
     height: 193px;
 }
 
+`
+const H1loading = styled.h1`
+color: rgb(252,165,14);
+font-size: 100px;
 `
