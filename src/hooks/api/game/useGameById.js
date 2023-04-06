@@ -1,6 +1,6 @@
-import useAsync from '../useAsync';
+import useAsync from '../../useAsync';
 
-import * as gameApi from '../../services/api/gamesApi';
+import * as gameApi from '../../../services/api/gamesApi';
 
 export default function useGameById(Id) {
   const {

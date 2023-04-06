@@ -7,21 +7,34 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import useGetUser from "@/hooks/api/useGetUser";
+import useGetUser from "@/hooks/api/user/useGetUser";
+import useGetProfPict from "@/hooks/api/profPicture/useGetProfPict";
+import ChangeProfPict from "@/components/Profile/ChangeProfPic";
 
 export default function Profile() {
   const router = useRouter();
   const [route,setRoute] = useState();
-  const {userData} = useGetUser();
+  let {userData,user} = useGetUser();
+  const  {profPictData} = useGetProfPict();
+  const [pictureData,setDtPict] = useState();
+  const [clicked,setClicked] = useState(false);
   const { page } = router.query;
-  console.log(userData?.data)
+  console.log(profPictData?.data)
   useEffect(()=>{
-    if(page){
-      setRoute(page)
+    const request = async()=>{
+      if(page){
+        setRoute(page)
+      }
+      
+      await user()
+      setDtPict(userData?.data.profpicture)
     }
-  },[page])
+    request()
+  },[page,userData,clicked])
   
-  
+const openProfPict = () =>{
+  setClicked(!clicked)
+}  
 
   return (
     <>
@@ -31,9 +44,10 @@ export default function Profile() {
       </Head>
       <NavBar  route ={route}/>
       <ProfileMain>
-        <ProfileDiv>
-          <Image src={veno} width={150} height={150} alt="Profile Picture" />
-        </ProfileDiv>
+        <OneProfileDiv clicked={clicked}>
+          {clicked? profPictData?.data.map((item)=><ChangeProfPict set={setClicked} data={item}/>):<ProfImg onClick={openProfPict} src={pictureData?.picture}  alt="Profile Picture" />}
+          
+        </OneProfileDiv>
 
         <TextDiv>Name: {userData?.data.name}</TextDiv>
         <TextDiv>Edit Profile</TextDiv>
@@ -67,12 +81,20 @@ const TextDiv = styled.div`
   font-size: 25px;
   cursor: pointer;
 `;
-const ProfileDiv = styled.div`
+
+const OneProfileDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
-  height: 160px;
-  background-color: rgba(255, 255, 255, 0.5);
+  flex-wrap: wrap;
+  gap: ${props=> props.clicked?"10px":"" };
+  width: ${props=> props.clicked?"100%":"160px"};
+  height: ${props=> props.clicked?"":"160px"};
+  background-color:${props=> props.clicked?"":"rgba(255, 255, 255, 0.5)"} ;
   border-radius: 50px;
-`;
+`
+
+const ProfImg = styled.img`
+width:150px;
+height:150px
+`

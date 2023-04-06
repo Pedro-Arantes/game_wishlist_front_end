@@ -5,13 +5,16 @@ import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
 import  veno from "../../../public/venonat.png"
 import Image from "next/image";
-import useDelSession from "@/hooks/api/useDelSession";
+import useDelSession from "@/hooks/api/user/useDelSession";
 import logoutMessage from "@/services/logout";
 import { verify } from "@/services/verifyLog";
+import useGetUser from "@/hooks/api/user/useGetUser";
 
 export default function NavBar({route}) {
   const router = useRouter()
   const {session} = useDelSession()
+  const {userData}= useGetUser();
+  const picture = userData?.data.profpicture.picture;
   const logout= async () =>{
     try {
         const sess = await session()
@@ -40,10 +43,8 @@ const goToProfile = () =>{
       <ProfLogout>
       <RiLogoutBoxLine onClick={logout}/>
       <ProfileDiv onClick={goToProfile}>
-        <Image
-        src={veno}
-        width={50}
-        height={50}
+        <ProfPict
+        src={picture}
         alt="Profile Picture"/>
         </ProfileDiv>
       
@@ -107,4 +108,8 @@ svg{
 const StyledLogo = styled.img`
   width: 60px;
   height: 60px;
+`
+const ProfPict = styled.img`
+width: 50px;
+height: 50px;
 `

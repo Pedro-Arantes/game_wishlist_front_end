@@ -1,5 +1,5 @@
-import useAsync from '../useAsync';
-import * as gamesApi from '../../services/api/gamesApi';
+import useAsync from '../../useAsync';
+import * as gamesApi from '../../../services/api/gamesApi';
 
 export default function usePostGame() {
   const {

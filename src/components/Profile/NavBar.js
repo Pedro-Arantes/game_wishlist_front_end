@@ -2,7 +2,7 @@ import styled from "styled-components";
 import  {IoArrowBackCircleSharp}  from "react-icons/io5";
 import {RiLogoutBoxLine} from "react-icons/ri"
 import { useRouter } from "next/router";
-import useDelSession from "@/hooks/api/useDelSession";
+import useDelSession from "@/hooks/api/user/useDelSession";
 import logoutMessage from "@/services/logout";
 
 export default function NavBar({route}) {

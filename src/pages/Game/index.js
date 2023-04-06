@@ -9,13 +9,14 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import StyledButton from "@/components/styled/StyledButton";
-import useAvgGrade from "@/hooks/api/useAvgGrade";
-import useGiveGrade from "@/hooks/api/useGiveGrade";
+import useAvgGrade from "@/hooks/api/grade/useAvgGrade";
+import useGiveGrade from "@/hooks/api/grade/useGiveGrade";
 import UserContext from "@/contexts/UserContext";
-import useGetWishByGameId from "@/hooks/api/useGetWishByGameId";
-import useGameById from "@/hooks/api/useGameById";
-import useCreateWish from "@/hooks/api/useCreateWish";
-import useDelWish from "@/hooks/api/useDelWish";
+import useGetWishByGameId from "@/hooks/api/wish/useGetWishByGameId";
+import useGameById from "@/hooks/api/game/useGameById";
+import useCreateWish from "@/hooks/api/wish/useCreateWish";
+import useDelWish from "@/hooks/api/wish/useDelWish";
+import useToken from "@/hooks/useToken";
 
 export default function Game() {
   const { DtGame } = useGameContext();
@@ -29,24 +30,25 @@ export default function Game() {
   let { gradesData, avgGrades } = useAvgGrade();
   const { page } = useContext(UserContext);
   const { grades } = useGiveGrade();
-  let { wishData, wish } = useGetWishByGameId();
   const { wishCreate } = useCreateWish();
   const { wishDel } = useDelWish();
   const game = gameData?.data;
-
+  const token = useToken();
+  let { wishData, wish } = useGetWishByGameId();
   useEffect(() => {
     async function request() {
       try {
         if (game) {
-          wishData = await wish(game?.id);
           gradesData = await avgGrades(game?.id);
+          if (token) {
+            wishData = await wish(game?.id);
+            if (wishData?.data !== undefined && wishData?.data !== "") {
+              setClicked(true);
+            }
+          }
         }
       } catch (error) {
-        alert("Erro!");
         console.log(error);
-      }
-      if (wishData?.data !== undefined && wishData?.data !== "") {
-        setClicked(true);
       }
     }
     request();

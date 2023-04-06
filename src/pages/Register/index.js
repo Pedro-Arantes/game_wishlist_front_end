@@ -6,7 +6,7 @@ import {
 } from "@/components/styled/FormsStyles";
 import StyledButton from "@/components/styled/StyledButton";
 import { useUserContext } from "@/contexts/UserContext";
-import useRegister from "@/hooks/api/useRegister";
+import useRegister from "@/hooks/api/user/useRegister";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";

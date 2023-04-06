@@ -12,3 +12,14 @@ export async function User() {
   });
   return response;
 }
+
+export async function patchUser(pictureId){
+
+  const token = useToken();
+  const response = await api.patch(`/user/${pictureId}`,null,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response ;
+}

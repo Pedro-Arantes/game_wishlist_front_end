@@ -1,6 +1,6 @@
-import useAsync from '../useAsync';
+import useAsync from '../../useAsync';
 
-import * as loginApi from '../../services/api/loginApi';
+import * as loginApi from '../../../services/api/loginApi';
 
 export default function useDelSession() {
   const {

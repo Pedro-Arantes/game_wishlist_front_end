@@ -1,4 +1,4 @@
-import useDelSession from "@/hooks/api/useDelSession";
+import useDelSession from "@/hooks/api/user/useDelSession";
 import { useRouter } from "next/router";
 
 

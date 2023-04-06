@@ -1,5 +1,5 @@
-import useAsync from '../useAsync';
-import * as gradesApi from '../../services/api/gradesApi';
+import useAsync from '../../useAsync';
+import * as gradesApi from '../../../services/api/gradesApi';
 
 export default function useGiveGrade() {
   const {
