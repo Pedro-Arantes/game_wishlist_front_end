@@ -9,10 +9,12 @@ import logoutMessage from "@/services/logout";
 import { verify } from "@/services/verifyLog";
 import { SearchInput, Caret, StyledLabelCaret } from "../styled/InputSearch";
 import useGetUser from "@/hooks/api/user/useGetUser";
+import { FaSearch } from 'react-icons/fa';
+import { useContext, useEffect, useState } from "react";
 
 export default function NavBar({ route }) {
   const router = useRouter();
-  const {userData}= useGetUser();
+  const { userData } = useGetUser();
   const picture = userData?.data.profpicture.picture;
   const { session } = useDelSession();
   const logout = async () => {
@@ -33,15 +35,18 @@ export default function NavBar({ route }) {
   return (
     <StyledNav>
       <IoArrowBackCircleSharp onClick={() => router.push("/")} />
-      <form>
-        <StyledLabelCaret for="search">Search</StyledLabelCaret>
-        <SearchInput id="search" type="search" pattern=".*\S.*" required />
+      <StyledLabelCaret for="search" >
+        <form>
+          <SearchInput id="search" type="search" pattern=".*\S.*" required />
+          <FaSearch/>
+        </form>
         <Caret class="caret"></Caret>
-      </form>
+      </StyledLabelCaret>
+
       <ProfLogout>
         <RiLogoutBoxLine onClick={logout} />
         <ProfileDiv onClick={goToProfile}>
-          <ProfPict src={picture}  alt="Profile Picture" />
+          <ProfPict src={picture} alt="Profile Picture" />
         </ProfileDiv>
       </ProfLogout>
     </StyledNav>
@@ -55,7 +60,7 @@ const StyledNav = styled.nav`
   justify-content: space-between;
   top: 0;
   left: 13px;
-  width: 1476px;
+  width: 1482px;
   height: 10%;
   background-color: rgb(5, 6, 45);
   color: white;
@@ -64,11 +69,14 @@ const StyledNav = styled.nav`
   border-width: 2px;
   padding: 13px;
   z-index: 2;
-
   svg {
     color: orange;
     font-size: 70px;
     cursor: pointer;
+
+  }
+  form svg{
+    font-size:30px
   }
 `;
 
@@ -92,6 +100,6 @@ const ProfLogout = styled.div`
   }
 `;
 const ProfPict = styled.img`
-width: 50px;
-height: 50px;
-`
+  width: 50px;
+  height: 50px;
+`;
