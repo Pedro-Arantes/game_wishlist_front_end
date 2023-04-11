@@ -11,10 +11,13 @@ import { SearchInput, Caret, StyledLabelCaret } from "../styled/InputSearch";
 import useGetUser from "@/hooks/api/user/useGetUser";
 import { FaSearch } from 'react-icons/fa';
 import { useContext, useEffect, useState } from "react";
+import useGameByName from "@/hooks/api/game/useGameByName";
 
-export default function NavBar({ route }) {
+export default function NavBar({ setGames }) {
   const router = useRouter();
   const { userData } = useGetUser();
+  const {gameBy} = useGameByName();
+  const [search,setSearch] = useState();
   const picture = userData?.data.profpicture.picture;
   const { session } = useDelSession();
   const logout = async () => {
@@ -32,12 +35,22 @@ export default function NavBar({ route }) {
       alert("You have to log in to acess here.");
     }
   };
+  const inputSearch = async (e) =>{
+    setSearch(e.target.value)
+    try {
+      const resp =  await gameBy(e.target.value);
+      setGames(resp.data)
+    } catch (error) {
+      
+    }
+    
+  }
   return (
     <StyledNav>
       <IoArrowBackCircleSharp onClick={() => router.push("/")} />
       <StyledLabelCaret for="search" >
         <form>
-          <SearchInput id="search" type="search" pattern=".*\S.*" required />
+          <SearchInput  onChange={inputSearch } id="search" type="search" pattern=".*\S.*" required />
           <FaSearch/>
         </form>
         <Caret class="caret"></Caret>
