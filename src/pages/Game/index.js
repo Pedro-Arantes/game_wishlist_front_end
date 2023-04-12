@@ -17,6 +17,7 @@ import useGameById from "@/hooks/api/game/useGameById";
 import useCreateWish from "@/hooks/api/wish/useCreateWish";
 import useDelWish from "@/hooks/api/wish/useDelWish";
 import useToken from "@/hooks/useToken";
+import useGetComment from "@/hooks/api/comment/useGetComment";
 
 export default function Game() {
   const { DtGame } = useGameContext();
@@ -33,11 +34,14 @@ export default function Game() {
   const { wishCreate } = useCreateWish();
   const { wishDel } = useDelWish();
   const game = gameData?.data;
+  const {commentData,comment} = useGetComment();
+  console.log(commentData?.data);
   const token = useToken();
   let { wishData, wish } = useGetWishByGameId();
   useEffect(() => {
     async function request() {
       try {
+        await comment(game?.id);
         if (game) {
           gradesData = await avgGrades(game?.id);
           if (token) {
@@ -156,6 +160,9 @@ export default function Game() {
             </RangeForm>
           </DataDiv>
         </GameDataStyle>
+        <CommentsDiv>
+              {}
+        </CommentsDiv>
       </GameMain>
     </>
   );
@@ -239,3 +246,7 @@ const RangeForm = styled.form`
     width: 40px;
   }
 `;
+const CommentsDiv = styled.div `
+display:flex;
+flex-direction:column;
+`
