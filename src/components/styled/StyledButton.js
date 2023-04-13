@@ -20,6 +20,7 @@ export default styled.button`
   width: ${props => props.wi ? props.wi+"%": "none"};
   min-width: ${props => props.wi ? props.wi+"%": "140px"};
   padding: 3px;
+  z-index:${props=> props.zIndex? props.zIndex:""};
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;

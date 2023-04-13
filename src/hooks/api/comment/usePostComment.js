@@ -8,7 +8,7 @@ export default function usePostComment() {
     error: commentError,
     data: commentData,
     act: commentCreate
-  } = useAsync((text,gameId)=>commentApi.postComment(text,gameId));
+  } = useAsync((text,gameId)=>commentApi.postComment(text,gameId),false);
 
   return {
     commentLoading,

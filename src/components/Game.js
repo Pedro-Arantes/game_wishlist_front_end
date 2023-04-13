@@ -1,14 +1,20 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useGameContext } from "@/contexts/GameContext";
 
 export default function GameComp({data,id}) {
+    const { setDtGame } = useGameContext();
     const {name,image} = data
     const router = useRouter()
-    return (
-      <GameDiv onClick={()=> router.push({
+    const goToGamePage = () =>{
+      localStorage.setItem("gameId",id)
+      router.push({
         pathname:'/Game',
         query:{num: id}
-        },'/Game')}>
+        },'/Game')
+    }
+    return (
+      <GameDiv onClick={goToGamePage}>
             <img alt={name} src={image}/>
             <p>{name}</p>
       </GameDiv>

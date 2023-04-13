@@ -8,7 +8,7 @@ export default function useGetComment() {
     error: commentError,
     data: commentData,
     act: comment
-  } = useAsync((gameId)=>commentApi.getComments(gameId));
+  } = useAsync((gameId)=>commentApi.getComments(gameId),false);
 
   return {
     commentLoading,

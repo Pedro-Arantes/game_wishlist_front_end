@@ -8,7 +8,7 @@ export default function useDelComment() {
     error: commentError,
     data: commentData,
     act: commentDel
-  } = useAsync((id)=>commentApi.delComment(id));
+  } = useAsync((id)=>commentApi.delComment(id),false);
 
   return {
     commentLoading,

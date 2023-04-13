@@ -18,30 +18,41 @@ import useCreateWish from "@/hooks/api/wish/useCreateWish";
 import useDelWish from "@/hooks/api/wish/useDelWish";
 import useToken from "@/hooks/useToken";
 import useGetComment from "@/hooks/api/comment/useGetComment";
+import CommentComp from "@/components/Game/Comment";
+import useGetUser from "@/hooks/api/user/useGetUser";
+import useGameId from "@/hooks/useGameId";
+import  {MdOutlineVideogameAssetOff}  from "react-icons/md";
+import usePostComment from "@/hooks/api/comment/usePostComment";
 
 export default function Game() {
   const { DtGame } = useGameContext();
+  const { userData } = useGetUser();
   const [clicked, setClicked] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [text,setText] = useState();
+  const [creatCommBool, setCreatCommBool] = useState(false);
   const [range, setRange] = useState(0);
   const [route, setRoute] = useState();
   const router = useRouter();
+  const gameId = useGameId();
   const { num } = router.query;
-  const { gameData, gameBy } = useGameById(num);
+  const { gameData, gameBy } = useGameById(!num ? gameId : num);
   let { gradesData, avgGrades } = useAvgGrade();
   const { page } = useContext(UserContext);
   const { grades } = useGiveGrade();
   const { wishCreate } = useCreateWish();
   const { wishDel } = useDelWish();
   const game = gameData?.data;
-  const {commentData,comment} = useGetComment();
-  console.log(commentData?.data);
+  const { commentData, comment } = useGetComment();
+  const {commentCreate}= usePostComment();
   const token = useToken();
   let { wishData, wish } = useGetWishByGameId();
   useEffect(() => {
     async function request() {
       try {
-        await comment(game?.id);
+        if (game?.id) {
+          await comment(game?.id);
+        }
         if (game) {
           gradesData = await avgGrades(game?.id);
           if (token) {
@@ -113,13 +124,23 @@ export default function Game() {
       console.log(error);
     }
   };
+  const submitComment = async (e)=>{
+    e.preventDefault();
+    try {
+      const x = await commentCreate(text,game.id)
+      setRefresh(!refresh);
+      setCreatCommBool(!creatCommBool);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <Head>
         <HeadComp />
         <title>GameWish</title>
       </Head>
-      <NavBar route={route} />
+      <NavBar route={route} userData={userData} />
       <GameMain>
         <GameDataStyle>
           <GameDiv>
@@ -161,7 +182,42 @@ export default function Game() {
           </DataDiv>
         </GameDataStyle>
         <CommentsDiv>
-              {}
+          {creatCommBool ? (
+            <CommentDiv>      <ImgNameDiv bool={creatCommBool}>
+            <div>
+              <img src={userData?.data.profpicture.picture} />
+            </div>
+            <CommentForm onSubmit={submitComment}>
+            <h3>What do you think about the game ?</h3>
+            <textarea   onChange={e => setText(e.target.value)} minlength="10" maxlength="350" autoComplete="on" spellCheck="true" rows="4" cols="100" />
+            <StyledButton
+              wi={20}
+            >
+              <span>Comment</span>
+            </StyledButton>
+            </CommentForm>
+            <MdOutlineVideogameAssetOff onClick={()=> setCreatCommBool(!creatCommBool)}/>
+            
+          </ImgNameDiv>
+          <p></p></CommentDiv>
+          ) : (
+            <StyledButton
+              onClick={() => setCreatCommBool(!creatCommBool)}
+              wi={20}
+              zIndex={2}
+            >
+              <span>Comment?</span>
+            </StyledButton>
+          )}
+          {commentData?.data.map((data) => (
+            <CommentComp
+              refresh={refresh}
+              setRefresh={setRefresh}
+              key={data.id}
+              data={data}
+              userId={userData?.data.id}
+            />
+          ))}
         </CommentsDiv>
       </GameMain>
     </>
@@ -175,7 +231,7 @@ const GameMain = styled.main`
   justify-content: start;
   padding: 50px;
   gap: 20px;
-  height: 100vh;
+  height: 100%;
   width: 91%;
   margin: 10px;
   margin-left: 13px;
@@ -246,7 +302,65 @@ const RangeForm = styled.form`
     width: 40px;
   }
 `;
-const CommentsDiv = styled.div `
-display:flex;
+const CommentsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+`;
+const CommentDiv = styled.div`
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+  flex-direction: column;
+  border-style: solid;
+  border-color: purple;
+  border-width: 5px;
+  background-color: #191970;
+
+  width: 100%;
+  padding: 9px;
+  p{
+    font-size:20px;
+  }
+`
+const ImgNameDiv = styled.div`
+    display: ${props=>props.bool?"flex":"none"};
+    align-items:center;
+    gap: 5px;
+    position: relative;
+    h3{
+        font-weight: 700;
+        font-size:25px;
+    }
+  img {
+    width: 60px;
+    height: 60px;
+  }
+  div{
+    background-color:orange;
+    border-radius: 50%;
+    width: fit-content;
+  }
+  svg{
+    font-size:40px;
+    color: red;
+    position: absolute;
+    right: 0px;
+  }
+`;
+const CommentForm = styled.form`
+display: flex;
 flex-direction:column;
+gap: 10px;
+textarea{
+  font-size: 16px;
+  border-radius: 8px;
+  border-style: solid ;
+  border-color: orange;
+  border-width: 4px;
+  width: 80%;
+  outline: orange solid 2px;
+}
 `

@@ -9,10 +9,9 @@ import logoutMessage from "@/services/logout";
 import { verify } from "@/services/verifyLog";
 import useGetUser from "@/hooks/api/user/useGetUser";
 
-export default function NavBar({route}) {
+export default function NavBar({route,userData}) {
   const router = useRouter()
   const {session} = useDelSession()
-  const {userData}= useGetUser();
   const picture = userData?.data.profpicture.picture;
   const logout= async () =>{
     try {
