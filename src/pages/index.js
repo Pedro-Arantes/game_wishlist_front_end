@@ -37,6 +37,9 @@ export default function Home() {
 const StyledH1 = styled.h1`
   font-size: 100px;
   color: white;
+  @media(max-width:768px){
+    font-size: 70px;
+  }
 `;
 const ButtonsDiv = styled.div`
 display: flex;
@@ -50,6 +53,10 @@ const StyledLogo = styled.img`
   width: 300px;
   height: 300px;
   margin-top: 50px;
+  @media(max-width:768px){
+    width:150px;
+    height: 150px;
+  }
 `
 const StyledSection = styled.section`
 display: flex;
@@ -70,4 +77,14 @@ h3{
 p{
   font-size: larger;
 }
+@media(max-width:768px){
+      width: 70%;
+      
+      h3{
+        font-size:30px;
+      }
+      p{
+        font-size:16px;
+      }
+  }
 `

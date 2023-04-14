@@ -20,7 +20,6 @@ export default function Register() {
   const [confPassword, setConfPass] = useState("");
   const [cpf, setCpf] = useState("");
   const [username, setUsername] = useState("");
-  const { token} = useUserContext();
   const { register, registerError,registerData } = useRegister();
 
   const submit = async (e) =>{
@@ -140,6 +139,9 @@ const StyledInput = styled.input`
   ::placeholder {
     text-align: start;
   }
+  @media(max-width:768px){
+    width: 90%;
+  }
 `;
 const InputsDiv = styled.div`
   display: flex;
@@ -147,4 +149,7 @@ const InputsDiv = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  @media(max-width:768px){
+      flex-direction: column;
+    }
 `;
