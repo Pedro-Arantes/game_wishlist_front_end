@@ -188,6 +188,10 @@ const GameMain = styled.main`
   background-color: rgb(5, 6, 45);
   color: white;
   padding-top: 100px;
+  @media(max-width:768px){
+    height: 100%;
+    min-height: 100vh;
+  }
 `;
 const ListGames = styled.div`
   display: flex;
@@ -220,6 +224,10 @@ const ListGames = styled.div`
   img {
     width: 129px;
     height: 193px;
+  }
+  @media(max-width:768px){
+    margin-bottom: 15px;
+    
   }
 `;
 const H1loading = styled.h1`
@@ -261,6 +269,10 @@ const RadioFormDiv = styled.div`
     animation-direction: alternate;
     animation-timing-function: linear;
   }
+  @media(max-width:768px){
+    width: 80%;
+    flex-wrap: wrap;
+  }
 `;
 const FillterForm = styled.form`
   margin-bottom: 60px;
@@ -272,4 +284,11 @@ const FillterForm = styled.form`
  display: flex;
  gap: 10px;
  height: 80px;
+ align-items: center;
+ justify-content: center;
+ @media(max-width:768px){
+    width: 50%;
+    height: 50%;
+
+  }
  `

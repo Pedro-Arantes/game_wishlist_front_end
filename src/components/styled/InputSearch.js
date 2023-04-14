@@ -15,6 +15,10 @@ export const SearchInput = styled.input`
     transition: .5s;
 
     margin-left:55px;
+    @media(max-width:768px){
+    width: 50px;
+    height: 50px;
+  }
 `;
 export const Caret = styled.i`
     position: absolute;
@@ -28,6 +32,7 @@ export const Caret = styled.i`
       opacity: 0;
     z-index: -1;
     }
+
 `;
 
 export const StyledLabelCaret = styled.div`
@@ -47,4 +52,25 @@ export const StyledLabelCaret = styled.div`
   :hover svg,:active svg {
       display: none;
     }
+
+    @media(max-width:768px){
+      svg{
+        font-size: 27px;
+        left: 66px;
+        bottom: 10px;
+      }
+      :hover input , :active input  {
+    width: 250px;
+  }
+  }
+  @media(max-width:375px){
+      svg{
+        font-size: 27px;
+        left: 66px;
+        bottom: 10px;
+      }
+      :hover input , :active input  {
+    width: 50%;
+  }
+  }
 `;

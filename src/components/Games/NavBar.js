@@ -91,6 +91,23 @@ const StyledNav = styled.nav`
   form svg{
     font-size:30px
   }
+  @media(max-width:768px){
+    width: 100%;
+    svg {
+    color: orange;
+    font-size: 60px;
+    cursor: pointer;
+
+  }
+  form svg{
+    font-size:30px
+  }
+  }
+  @media(max-width:375px){
+    svg{
+      font-size: 30px;
+    }
+  }
 `;
 
 const ProfileDiv = styled.div`
@@ -101,6 +118,10 @@ const ProfileDiv = styled.div`
   height: 70px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
+  @media(max-width:768px){
+    width: 50px;
+    height: 50px;
+  }
 `;
 const ProfLogout = styled.div`
   display: flex;
@@ -111,8 +132,23 @@ const ProfLogout = styled.div`
     color: red;
     font-size: 50px;
   }
+  @media(max-width:768px){
+    svg{
+      font-size: 40px;
+    }
+  }
+  @media(max-width:375px){
+    svg{
+      font-size: 30px;
+    }
+  }
 `;
 const ProfPict = styled.img`
   width: 50px;
   height: 50px;
+
+  @media(max-width:768px){
+    width: 40px;
+    height: 40px;
+  }
 `;

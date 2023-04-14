@@ -35,4 +35,10 @@ height: max-content;
 border-radius: 5px;
 color: black;
 font-weight: 600;
+@media(max-width:768px){
+    img{
+      height: 130px;
+      width: 130px;
+    }
+  }
 `  
