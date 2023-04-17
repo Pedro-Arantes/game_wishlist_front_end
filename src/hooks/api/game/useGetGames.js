@@ -8,7 +8,7 @@ export default function useGetGames() {
     error: gamesError,
     data: gamesData,
     act: getGames
-  } = useAsync(()=>gamesApi.getGames());
+  } = useAsync(()=>gamesApi.getGames(),false);
 
   return {
     gamesLoading,

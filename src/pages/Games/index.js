@@ -25,6 +25,10 @@ export default function Games() {
   const { gameFillter } = useGameFillter();
   const router = useRouter();
   useEffect(() => {
+    const teste = async () =>{
+      await getGames()
+    }
+    teste()
     setGames(gamesData?.data);
     setDtGame(gamesData?.data);
     setPage("Games");
@@ -47,7 +51,6 @@ export default function Games() {
       console.log(error);
     }
   }
-  console.log(games);
   return (
     <>
       <Head>

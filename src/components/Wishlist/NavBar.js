@@ -9,12 +9,19 @@ import useDelSession from "@/hooks/api/user/useDelSession";
 import logoutMessage from "@/services/logout";
 import { verify } from "@/services/verifyLog";
 import useGetUser from "@/hooks/api/user/useGetUser";
+import { useEffect } from "react";
 
 export default function NavBar({route}) {
   const router = useRouter()
   const {session} = useDelSession()
-  const {userData}= useGetUser();
+  const {userData,user}= useGetUser();
   const picture = userData?.data.profpicture.picture;
+  useEffect(()=>{
+    const teste =async ()=>{
+      await user()
+    }
+    teste()
+  },[])
   const logout= async () =>{
     try {
         const sess = await session()
