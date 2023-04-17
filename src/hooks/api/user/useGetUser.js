@@ -8,7 +8,7 @@ export default function useGetUser() {
     error: userError,
     data: userData,
     act: user
-  } = useAsync(()=>userApi.User());
+  } = useAsync(()=>userApi.User(),false);
 
   return {
     userLoading,

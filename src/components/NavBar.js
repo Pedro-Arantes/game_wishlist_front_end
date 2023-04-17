@@ -35,7 +35,7 @@ const goToProfile = () =>{
       <ProfLogout>
       <RiLogoutBoxLine onClick={logout}/>
       <ProfileDiv onClick={goToProfile}>
-        <ProfPict src={picture}  alt="Profile Picture" />
+        <ProfPict src={picture?picture:"https://cdn0.iconfinder.com/data/icons/pokemon-go-vol-2/135/_venonat-256.png"}  alt="Profile Picture" />
       </ProfileDiv>
       </ProfLogout>
       

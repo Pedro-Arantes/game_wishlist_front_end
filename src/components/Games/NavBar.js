@@ -12,17 +12,30 @@ import useGetUser from "@/hooks/api/user/useGetUser";
 import { FaSearch } from 'react-icons/fa';
 import { useContext, useEffect, useState } from "react";
 import useGameByName from "@/hooks/api/game/useGameByName";
+import useToken from "@/hooks/useToken";
 
 export default function NavBar({ setGames }) {
   const router = useRouter();
-  const { userData } = useGetUser();
+  const token = useToken();
+  const { userData,user } = useGetUser();
   const {gameBy} = useGameByName();
   const [search,setSearch] = useState();
   const picture = userData?.data.profpicture.picture;
   const { session } = useDelSession();
+  useEffect(()=>{
+    const test = async ()=>{
+      if(token){
+        await user()
+      }
+    }
+    test()
+  },[])
   const logout = async () => {
     try {
       const sess = await session();
+      if(token){
+        await user()
+      }
       logoutMessage(router);
     } catch (error) {
       logoutMessage(router, error);
@@ -59,7 +72,7 @@ export default function NavBar({ setGames }) {
       <ProfLogout>
         <RiLogoutBoxLine onClick={logout} />
         <ProfileDiv onClick={goToProfile}>
-          <ProfPict src={picture} alt="Profile Picture" />
+          <ProfPict src={!picture?"https://cdn0.iconfinder.com/data/icons/pokemon-go-vol-2/135/_venonat-256.png":picture} alt="Profile Picture" />
         </ProfileDiv>
       </ProfLogout>
     </StyledNav>

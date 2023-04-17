@@ -66,12 +66,15 @@ const ProfileMain = styled.main`
   padding: 50px;
   gap: 20px;
   height: 100vh;
-  width: 91%;
+  width: 97.5%;
   margin: 10px;
   margin-left: 13px;
   margin-top: 79px;
   background-color: rgb(5, 6, 45);
   color: white;
+  @media(max-width:768px){
+    margin-top: 5%;
+  }
 `;
 const TextDiv = styled.div`
   border-bottom: 2px;

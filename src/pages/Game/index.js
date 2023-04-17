@@ -26,7 +26,7 @@ import usePostComment from "@/hooks/api/comment/usePostComment";
 
 export default function Game() {
   const { DtGame } = useGameContext();
-  const { userData } = useGetUser();
+  const { userData,user } = useGetUser();
   const [clicked, setClicked] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [text,setText] = useState();
@@ -50,6 +50,9 @@ export default function Game() {
   useEffect(() => {
     async function request() {
       try {
+        if(token){
+          await user()
+        }
         if (game?.id) {
           await comment(game?.id);
         }
