@@ -235,7 +235,7 @@ const GameMain = styled.main`
   padding: 50px;
   gap: 20px;
   height: 100%;
-  width: 91%;
+  width: 1475px;
   margin: 10px;
   margin-left: 13px;
   margin-top: 79px;
